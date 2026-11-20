@@ -1,0 +1,495 @@
+{
+  "sources": {
+    "bbListing": "https://www.bestbuy.com/product/x/BCKFSGRX3H",
+    "targetListing": "https://www.target.com/p/-/A-94901810",
+    "rbListing": "https://www.ray-ban.com/usa/electronics/RW4012ray-ban%20meta%20gen%202%20wayfarer-black/8056262721391",
+    "targetStore": "https://www.target.com/sl/san-francisco-west--target-store/2768",
+    "bbStore": "https://stores.bestbuy.com/ca/san-francisco/1717-harrison-st-187.html",
+    "bbQuote": "/demo/best-buy-cart-quote.jpg",
+    "bbPickup": "/demo/best-buy-sf-pickup.jpg",
+    "rbPrice": "/demo/ray-ban-item-price.jpg",
+    "rbPickup": "/demo/ray-ban-sf-pickup.jpg"
+  },
+  "runs": {
+    "Q-S": {
+      "task": "quick",
+      "path": "standard",
+      "prompt": "Please do a new lookup for this request. Use the retailers directly unless this message supplies a lookup link. Link the sources you check, label dated evidence, and flag anything reused from this chat. Research only.\n\nI’m comparing prices on Ray-Ban Meta Wayfarer Gen 2 glasses in matte black, regular size, with clear nonprescription lenses. What are the advertised prices at Best Buy, Target, and Ray-Ban near 94123? Please include the exact listings and identify the lowest price or a tie.",
+      "elapsedSeconds": {
+        "firstUsefulAt": 35.855,
+        "threeStoreFactsAt": 35.855,
+        "finalAt": 297.229
+      },
+      "coverage": {
+        "addressed": 7,
+        "total": 7,
+        "unresolved": []
+      },
+      "accuracyChecks": [
+        {
+          "field": "Best Buy exact listing",
+          "status": "supported",
+          "basis": "SKU 6642579, regular matte black and clear.",
+          "sources": [
+            "bbListing",
+            "bbQuote"
+          ]
+        },
+        {
+          "field": "Target exact listing",
+          "status": "supported",
+          "basis": "TCIN 94901810, Regular selected.",
+          "sources": [
+            "targetListing"
+          ]
+        },
+        {
+          "field": "Ray-Ban exact listing",
+          "status": "supported",
+          "basis": "RW4012 601SSB 50–22, GTIN 8056262721391.",
+          "sources": [
+            "rbListing",
+            "rbPrice"
+          ]
+        },
+        {
+          "field": "Best Buy price",
+          "status": "supported",
+          "basis": "$284.00.",
+          "sources": [
+            "bbQuote"
+          ]
+        },
+        {
+          "field": "Target price",
+          "status": "supported",
+          "basis": "$284.99.",
+          "sources": [
+            "targetListing"
+          ]
+        },
+        {
+          "field": "Ray-Ban price",
+          "status": "supported",
+          "basis": "$284.25.",
+          "sources": [
+            "rbPrice"
+          ]
+        },
+        {
+          "field": "Lowest or tie",
+          "status": "supported",
+          "basis": "Best Buy is 25¢ below Ray-Ban and 99¢ below Target.",
+          "sources": [
+            "bbQuote",
+            "targetListing",
+            "rbPrice"
+          ]
+        }
+      ],
+      "finalReply": "Fresh lookup, done live at the retailers today — nothing reused from earlier in this chat. A 25%-off sale is now live at all three, so last night's $379 figures are superseded.\n\nDated evidence: live product-page reads today, Fri Nov 20, 2026, ~3:02–3:05pm PT (plus a fresh catalog pull minutes earlier that matched):\n\nRay-Ban Meta - Wayfarer (Gen 2) glasses with Meta AI, Audio, Photo, Video Compatibility - Clear lenses - Matte Black at Best Buy — $284.00 on sale, regular $379.00 (\"Black Friday Deal,\" save $95). bestbuy.com listing\nRAY-BAN META (GEN 2) WAYFARER — Ray-ban Meta (gen 2) Wayfarer AI Glasses in Matte Black Frame and Clear Lenses (50-22) - RW4012 at Ray-Ban — $284.25 on sale, regular $379.00 (25% off). ray-ban.com listing\nRay-Ban Meta (Gen 2), Wayfarer, Matte Black | Smart AI Glasses for Men, Women - Camera, Audio, Video Recording - Clear Lenses at Target — $284.99 on sale, regular $379.99 (sale ends Saturday). target.com listing — the URL slug says \"large,\" but the page loads with Regular selected (that's the variant priced here).\n\nLowest price: Best Buy at $284.00 — no tie. Ray-Ban is 25¢ more, Target 99¢ more.",
+      "recommendation": "Best Buy at $284.00",
+      "factualSummary": "7 of 7 checked facts supported",
+      "freshness": "Muse reported fresh retailer checks.",
+      "frames": [
+        {
+          "offset": 1.12,
+          "img": "/demo/q-s-1.webp"
+        },
+        {
+          "offset": 42.11,
+          "img": "/demo/q-s-2.webp"
+        },
+        {
+          "offset": 102.49,
+          "img": "/demo/q-s-3.webp"
+        },
+        {
+          "offset": 199.42,
+          "img": "/demo/q-s-4.webp"
+        },
+        {
+          "offset": 297.229,
+          "img": "/demo/q-s-5.webp"
+        }
+      ]
+    },
+    "Q-R": {
+      "task": "quick",
+      "path": "routed",
+      "prompt": "Please do a new lookup for this request. Use the retailers directly unless this message supplies a lookup link. Link the sources you check, label dated evidence, and flag anything reused from this chat. Research only.\n\nI’m comparing prices on Ray-Ban Meta Wayfarer Gen 2 glasses in matte black, regular size, with clear nonprescription lenses. What are the advertised prices at Best Buy, Target, and Ray-Ban near 94123? Please include the exact listings and identify the lowest price or a tie.\n\nStart by checking these retailers through Substation: https://substation-pa-hackathon.pete887281.chatgpt.site/agent/quick?format=json. Use the retailer websites for anything Substation can’t verify, then report the prices and lowest price or tie. Please include the new saved run link in your reply.",
+      "elapsedSeconds": {
+        "firstUsefulAt": 25.312,
+        "threeStoreFactsAt": 25.312,
+        "finalAt": 25.312
+      },
+      "coverage": {
+        "addressed": 7,
+        "total": 7,
+        "unresolved": []
+      },
+      "accuracyChecks": [
+        {
+          "field": "Best Buy exact listing",
+          "status": "supported",
+          "basis": "SKU 6642579, regular matte black and clear.",
+          "sources": [
+            "bbListing",
+            "bbQuote"
+          ]
+        },
+        {
+          "field": "Target exact listing",
+          "status": "supported",
+          "basis": "TCIN 94901810, Regular selected.",
+          "sources": [
+            "targetListing"
+          ]
+        },
+        {
+          "field": "Ray-Ban exact listing",
+          "status": "supported",
+          "basis": "RW4012 601SSB 50–22, GTIN 8056262721391.",
+          "sources": [
+            "rbListing",
+            "rbPrice"
+          ]
+        },
+        {
+          "field": "Best Buy price",
+          "status": "supported",
+          "basis": "$284.00.",
+          "sources": [
+            "bbQuote"
+          ]
+        },
+        {
+          "field": "Target price",
+          "status": "supported",
+          "basis": "$284.99.",
+          "sources": [
+            "targetListing"
+          ]
+        },
+        {
+          "field": "Ray-Ban price",
+          "status": "supported",
+          "basis": "$284.25.",
+          "sources": [
+            "rbPrice"
+          ]
+        },
+        {
+          "field": "Lowest or tie",
+          "status": "supported",
+          "basis": "Best Buy is 25¢ below Ray-Ban and 99¢ below Target.",
+          "sources": [
+            "bbQuote",
+            "targetListing",
+            "rbPrice"
+          ]
+        }
+      ],
+      "finalReply": "Done — new Substation run first, retailer sites for what it couldn't verify.\n\nNew Substation run: ad1007a8-fd7c-4f5c-8810-d9b2ba5620d9\nSaved run: substation-pa-hackathon.pete887281.chatgpt.site/runs/ad1007a8-fd7c-4f5c-8810-d9b2ba5620d9 — I reopened it just now; the saved decision and offers match the original response exactly.\n\nWhat Substation found (evidence mode: \"dated merchant capture,\" observed today, Fri Nov 20, 11:16–11:18am PT):\nBest Buy — $284.00 (SKU 6642579)\nRay-Ban — $284.25 (RW4012 601SSB 50–22)\nTarget — $284.99 (TCIN 94901810). Its notes also show an older synced Target price of $379.99 from last night (Nov 19, 9:40pm PT), superseded by today's $284.99.\nIts decision: Best Buy lowest at $284.00, status \"advertised price.\"\n\nWhat Substation couldn't verify, checked on the retailer sites directly: its prices are this morning's captures, not live reads. The live product pages confirm the same three prices this afternoon — Best Buy $284.00 (regular $379.00), Ray-Ban $284.25 (regular $379.00), Target $284.99 (regular $379.99) — on the exact listings: Ray-Ban Meta - Wayfarer (Gen 2) glasses with Meta AI, Audio, Photo, Video Compatibility - Clear lenses - Matte Black, RAY-BAN META (GEN 2) WAYFARER — Ray-ban Meta (gen 2) Wayfarer AI Glasses in Matte Black Frame and Clear Lenses (50-22) - RW4012, Ray-Ban Meta (Gen 2), Wayfarer, Matte Black | Smart AI Glasses for Men, Women - Camera, Audio, Video Recording - Clear Lenses.\n\nReuse flag: that live retailer verification is reused from this chat — it's the check I ran minutes ago (today 3:02–3:05pm PT) for your previous message, product cards included. The Substation run and its saved-run verification are new.\n\nVerdict: Best Buy is the lowest at $284.00 — no tie; Ray-Ban is 25¢ higher, Target 99¢ higher.",
+      "recommendation": "Best Buy at $284.00",
+      "factualSummary": "7 of 7 checked facts supported",
+      "freshness": "New Substation receipt. Muse reused the standard run’s retailer checks.",
+      "frames": [
+        {
+          "offset": 0.97,
+          "img": "/demo/q-r-1.webp"
+        },
+        {
+          "offset": 25.312,
+          "img": "/demo/q-r-2.webp"
+        }
+      ],
+      "receiptVerification": {
+        "source": "/runs/ad1007a8-fd7c-4f5c-8810-d9b2ba5620d9"
+      }
+    },
+    "C-S": {
+      "task": "pickup",
+      "path": "standard",
+      "prompt": "Please do a new lookup for this request. Use the retailers directly unless this message supplies a lookup link. Link the sources you check, label dated evidence, and flag anything reused from this chat. Research only.\n\nI’m leaving San Francisco Saturday morning and want a pair of Ray-Ban Meta Wayfarer Gen 2 glasses for the trip. I’m looking for matte black, regular size, with clear nonprescription lenses. I can pick them up Friday evening near 94123. Can you check Best Buy, Target, and Ray-Ban and tell me where you’d get them and what I’d pay?",
+      "elapsedSeconds": {
+        "firstUsefulAt": 28.166,
+        "threeStoreFactsAt": 28.166,
+        "finalAt": 286.125
+      },
+      "coverage": {
+        "addressed": 8,
+        "total": 8,
+        "fields": [
+          "Best Buy exact item and price",
+          "Target exact item and price",
+          "Ray-Ban exact item and price",
+          "Best Buy pickup",
+          "Target pickup",
+          "Ray-Ban pickup",
+          "Recommendation and reason",
+          "Expected cost for recommended store"
+        ],
+        "unresolved": [
+          "Current Target count and pickup window",
+          "Final payable total"
+        ],
+        "paymentEvidence": "Unverified Target estimate around $310"
+      },
+      "accuracyChecks": [
+        {
+          "field": "Best Buy item and advertised price",
+          "status": "supported",
+          "basis": "Exact matching model at $284.00.",
+          "sources": [
+            "bbQuote",
+            "bbListing"
+          ]
+        },
+        {
+          "field": "Target item and advertised price",
+          "status": "supported",
+          "basis": "Exact matching model at $284.99.",
+          "sources": [
+            "targetListing"
+          ]
+        },
+        {
+          "field": "Ray-Ban item and advertised price",
+          "status": "supported",
+          "basis": "Exact matching model at $284.25.",
+          "sources": [
+            "rbListing",
+            "rbPrice"
+          ]
+        },
+        {
+          "field": "Best Buy pickup estimate and closing time",
+          "status": "supported",
+          "basis": "Dated store selector showed same-day availability, about one hour, Harrison at 9 p.m. This supports an estimate.",
+          "sources": [
+            "bbPickup",
+            "bbStore"
+          ]
+        },
+        {
+          "field": "Target store address and closing time",
+          "status": "supported",
+          "basis": "Target’s directory lists 2675 Geary Blvd and a 10 p.m. Friday closing time.",
+          "sources": [
+            "targetStore"
+          ]
+        },
+        {
+          "field": "Target has two left",
+          "status": "unverified",
+          "basis": "Muse reported two at Geary. The independently checked product page shows general stock. The stored evidence lacks a store-specific count.",
+          "sources": [
+            "targetListing",
+            "targetStore"
+          ]
+        },
+        {
+          "field": "Target ready within two hours",
+          "status": "unverified",
+          "basis": "Muse reported two hours. No independent exact-SKU, same-store window was captured.",
+          "sources": [
+            "targetListing",
+            "targetStore"
+          ]
+        },
+        {
+          "field": "Ray-Ban pickup unavailable within 50 miles",
+          "status": "supported",
+          "basis": "Merchant store selector for this variant and ZIP, 11:18 a.m. PT.",
+          "sources": [
+            "rbPickup"
+          ]
+        },
+        {
+          "field": "Target out-the-door estimate",
+          "status": "unverified",
+          "basis": "Muse estimated roughly $310. No Target cart quote validates the amount.",
+          "sources": [
+            "targetListing"
+          ]
+        },
+        {
+          "field": "Ray-Ban delivery Nov 24",
+          "status": "unverified",
+          "basis": "No matching delivery-date capture.",
+          "sources": [
+            "rbListing"
+          ]
+        }
+      ],
+      "finalReply": "Where I'd get them: Target on Geary — the Ray-Ban Meta (Gen 2), Wayfarer, Matte Black | Smart AI Glasses for Men, Women - Camera, Audio, Video Recording - Clear Lenses for $284.99. Fresh live check today (Fri Nov 20, 3:09–3:10pm PT): San Francisco West (2675 Geary Blvd, ~1.5 miles from 94123) has your exact spec with 2 left, ready for pickup within 2 hours, and the store is open until 10pm tonight. You'd pay $284.99 plus tax, roughly $310 out the door. With only 2 on the shelf, ordering for pickup now is the safe move.\n\nThe close alternative is the Ray-Ban Meta - Wayfarer (Gen 2) glasses with Meta AI, Audio, Photo, Video Compatibility - Clear lenses - Matte Black at Best Buy for $284.00 (checked 3:08pm PT) — 99¢ cheaper and ready in about an hour at the Harrison St. store, but it's 3 miles away, closes at 9pm, and the page showed no stock count, so Target's confirmed 2 is the surer bet tonight.\n\nRay-Ban direct is out for this trip despite the $284.25 sale price: no store pickup within 50 miles of 94123, and delivery lands Tue Nov 24.\n\nSources: Target listing · Best Buy listing · Ray-Ban listing\n\nReuse flag: nothing carried over from earlier in this chat — prices and pickup counts are all from today's fresh catalog pull and the live retailer check that just ran (3:07–3:11pm PT).",
+      "recommendation": "Target on Geary, about $310 estimated",
+      "factualSummary": "6 supported · 4 unverified",
+      "freshness": "Muse reported a fresh retailer check.",
+      "frames": [
+        {
+          "offset": 1.03,
+          "img": "/demo/c-s-1.webp"
+        },
+        {
+          "offset": 28.17,
+          "img": "/demo/c-s-2.webp"
+        },
+        {
+          "offset": 243.55,
+          "img": "/demo/c-s-3.webp"
+        },
+        {
+          "offset": 286.125,
+          "img": "/demo/c-s-4.webp"
+        }
+      ]
+    },
+    "C-R": {
+      "task": "pickup",
+      "path": "routed",
+      "prompt": "Please do a new lookup for this request. Use the retailers directly unless this message supplies a lookup link. Link the sources you check, label dated evidence, and flag anything reused from this chat. Research only.\n\nI’m leaving San Francisco Saturday morning and want a pair of Ray-Ban Meta Wayfarer Gen 2 glasses for the trip. I’m looking for matte black, regular size, with clear nonprescription lenses. I can pick them up Friday evening near 94123. Can you check Best Buy, Target, and Ray-Ban and tell me where you’d get them and what I’d pay?\n\nStart by checking these retailers through Substation: https://substation-pa-hackathon.pete887281.chatgpt.site/agent/pickup?format=json. Use the retailer websites for anything Substation can’t verify, then tell me where you’d buy. Please include the new saved run link in your reply.",
+      "elapsedSeconds": {
+        "firstUsefulAt": 76.584,
+        "threeStoreFactsAt": 76.584,
+        "finalAt": 76.584
+      },
+      "coverage": {
+        "addressed": 8,
+        "total": 8,
+        "fields": [
+          "Best Buy exact item and price",
+          "Target exact item and price",
+          "Ray-Ban exact item and price",
+          "Best Buy pickup",
+          "Target pickup",
+          "Ray-Ban pickup",
+          "Recommendation and reason",
+          "Expected cost for recommended store"
+        ],
+        "unresolved": [
+          "Current Target count and pickup window",
+          "Final payable total"
+        ],
+        "paymentEvidence": "Dated Best Buy cart quote, payment unknown"
+      },
+      "accuracyChecks": [
+        {
+          "field": "Best Buy item and advertised price",
+          "status": "supported",
+          "basis": "Exact matching model at $284.00.",
+          "sources": [
+            "bbQuote",
+            "bbListing"
+          ]
+        },
+        {
+          "field": "Target item and advertised price",
+          "status": "supported",
+          "basis": "Exact matching model at $284.99.",
+          "sources": [
+            "targetListing"
+          ]
+        },
+        {
+          "field": "Ray-Ban item and advertised price",
+          "status": "supported",
+          "basis": "Exact matching model at $284.25.",
+          "sources": [
+            "rbListing",
+            "rbPrice"
+          ]
+        },
+        {
+          "field": "Best Buy pickup estimate and closing time",
+          "status": "supported",
+          "basis": "Dated store selector showed same-day availability, about one hour, Harrison at 9 p.m. This supports an estimate.",
+          "sources": [
+            "bbPickup",
+            "bbStore"
+          ]
+        },
+        {
+          "field": "Target store address and closing time",
+          "status": "supported",
+          "basis": "Target’s directory lists 2675 Geary Blvd and a 10 p.m. Friday closing time.",
+          "sources": [
+            "targetStore"
+          ]
+        },
+        {
+          "field": "Target has two left",
+          "status": "unverified",
+          "basis": "Muse reported two at Geary. The independently checked product page shows general stock. The stored evidence lacks a store-specific count.",
+          "sources": [
+            "targetListing",
+            "targetStore"
+          ]
+        },
+        {
+          "field": "Target ready within two hours",
+          "status": "unverified",
+          "basis": "Muse reported two hours. No independent exact-SKU, same-store window was captured.",
+          "sources": [
+            "targetListing",
+            "targetStore"
+          ]
+        },
+        {
+          "field": "Ray-Ban pickup unavailable within 50 miles",
+          "status": "supported",
+          "basis": "Merchant store selector for this variant and ZIP, 11:18 a.m. PT.",
+          "sources": [
+            "rbPickup"
+          ]
+        },
+        {
+          "field": "Best Buy cart quote",
+          "status": "supported",
+          "basis": "The 11:19 a.m. cart showed $284 + $24.50 estimated tax + $4.26 fee + $0 pickup = $312.76.",
+          "sources": [
+            "bbQuote"
+          ]
+        },
+        {
+          "field": "Best Buy final payable amount",
+          "status": "supported",
+          "basis": "The cart presents an estimate. The saved pickup decision leaves the final payable total unknown.",
+          "sources": [
+            "bbQuote"
+          ]
+        },
+        {
+          "field": "Time ascribed to Best Buy pickup evidence",
+          "status": "contradicted",
+          "basis": "Muse cites 11:16 a.m. for pickup. The item-price capture was 11:16, and the store-specific pickup capture was 11:17:43.",
+          "sources": [
+            "bbPickup"
+          ]
+        }
+      ],
+      "finalReply": "New Substation pickup run complete and verified:\n\nRun ID: d9040ab9-78f3-4b47-95a7-c734a28c1003\nSaved run: substation-pa-hackathon.pete887281.chatgpt.site/runs/d9040ab9-78f3-4b47-95a7-c734a28c1003 — reopened just now; saved decision and offers match the original response exactly.\n\nSubstation's decision: Best Buy — 1717 Harrison St, San Francisco.\nItem price: $284.00\nEstimated cart total: $312.76 — tax estimate $24.50 + recycling fee $4.26, pickup fee $0 (dated merchant cart quote, today 11:19am PT)\nFinal payable total: unknown — the run's payableTotal is null; $312.76 is an estimate, not a checkout-confirmed total.\nPickup status: \"unconfirmed\" in Substation's own words — its evidence level is \"estimate\" (same-day availability, ~1 hour prep, store closes 9pm), from dated merchant captures today at 11:16am PT. Target's pickup it left unknown; Ray-Ban pickup unavailable within 50 miles ($284.25 there).\n\nFilled in from the retailer websites: the live check this afternoon confirmed Best Buy Harrison shows \"Available today — ready in 1 hour,\" and Target's Geary store — the gap in Substation's evidence — has 2 left, ready within 2 hours, open until 10pm, at $284.99.\n\nWhere I'd buy: Best Buy. It's the cheapest, ready fastest, and the live page confirms today's availability. If you'd rather have a confirmed count, Target Geary's 2 left is the safer shelf, for 99¢ more.\n\nReuse flag: the retailer-site verification above is reused from this chat — the live check I ran minutes ago (today 3:07–3:11pm PT). The Substation run and saved-run verification are new.",
+      "recommendation": "Best Buy on Harrison, $312.76 quoted",
+      "factualSummary": "8 supported · 2 unverified · 1 timestamp discrepancy",
+      "freshness": "New Substation receipt. Muse reused the preceding retailer checks.",
+      "frames": [
+        {
+          "offset": 1.01,
+          "img": "/demo/c-r-1.webp"
+        },
+        {
+          "offset": 52.45,
+          "img": "/demo/c-r-2.webp"
+        },
+        {
+          "offset": 76.584,
+          "img": "/demo/c-r-3.webp"
+        }
+      ],
+      "receiptVerification": {
+        "source": "/runs/d9040ab9-78f3-4b47-95a7-c734a28c1003"
+      }
+    }
+  }
+}
