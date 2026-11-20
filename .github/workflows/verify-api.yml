@@ -1,0 +1,47 @@
+name: Verify standalone agent
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'worker.mjs'
+      - 'service.mjs'
+      - 'agent.mjs'
+      - 'receipt.mjs'
+      - 'build.mjs'
+      - '.openai/hosting.json'
+      - '.github/workflows/verify-api.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --test agent.test.mjs && node build.mjs
+      - name: Run the HTTP agent and reopen its receipt after a restart
+        shell: bash
+        run: |
+          set -euo pipefail
+          start_server() {
+            node serve.mjs > "$RUNNER_TEMP/substation.log" 2>&1 &
+            server_pid=$!
+            for i in {1..50}; do
+              if curl -fsS http://127.0.0.1:3000/ -o /dev/null 2>/dev/null; then return; fi
+              sleep 0.2
+            done
+            exit 1
+          }
+          start_server
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          curl -fsS -X POST http://127.0.0.1:3000/agent/pickup -o "$RUNNER_TEMP/new.json"
+          receipt_url=$(jq -er .jsonUrl "$RUNNER_TEMP/new.json")
+          kill "$server_pid"
+          wait "$server_pid" || true
+          start_server
+          curl -fsS "$receipt_url" -o "$RUNNER_TEMP/saved.json"
+          jq -e -s '.[0].run == .[1].run and (.[1].run.trace | length) > 0' "$RUNNER_TEMP/new.json" "$RUNNER_TEMP/saved.json"
+          jq '{runId, decision:.run.decision.status, seller:.run.decision.seller, itemPrice:.run.decision.itemPrice, estimatedCartTotal:.run.decision.cartQuote.quotedTotal, steps:(.run.trace|length)}' "$RUNNER_TEMP/saved.json"
