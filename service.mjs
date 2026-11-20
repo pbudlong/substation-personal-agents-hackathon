@@ -1,5 +1,5 @@
 import {investigate} from './agent.mjs';
-import {hasSql,readSql,saveSql,sendAmplitude,queryCognee,applyAirbyte} from './sponsors.mjs';
+import {hasSql,readSql,saveSql,sendAmplitude,queryCognee,applyAirbyte,readAirbyteSql} from './sponsors.mjs';
 export async function getRun(env,id){
   if(hasSql(env)){
     try{const run=await readSql(env,id);if(run)return {run,backend:'SingleStore'};}catch{}
@@ -11,8 +11,10 @@ export async function getRun(env,id){
 export async function execute(scope,env){
   const start=Date.now(), integrations={}, enrich=async(offers,log,id)=>{
     try{
-      const feed=await env.BUCKET?.get('feeds/airbyte.json');
-      integrations.airbyte=applyAirbyte(offers,feed?JSON.parse(await feed.text()):null,log);
+      let feed;
+      if(env.AIRBYTE_CONNECTION_ID&&env.AIRBYTE_JOB_ID&&hasSql(env))feed=await readAirbyteSql(env);
+      else{const raw=await env.BUCKET?.get('feeds/airbyte.json');feed=raw?JSON.parse(await raw.text()):null;}
+      integrations.airbyte=applyAirbyte(offers,feed,log);
     }catch(error){integrations.airbyte={status:'failed',reason:error.message};}
     if(scope!=='pickup'||!env.COGNEE_URL||!env.COGNEE_API_KEY){integrations.cognee={status:'not connected'};return;}
     try{

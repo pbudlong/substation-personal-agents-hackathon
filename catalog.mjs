@@ -1,4 +1,8 @@
 export const GTIN = '8056262721391';
+// Source: the Nov 19 Catalog configs worksheet's direct public-listing review.
+// Its collection time was recorded to the minute; this is a dated price, not inventory.
+export const THURSDAY_CATALOG_CSV = 'merchant,item_id,gtin,price_usd,source,observed_at,observed_precision,source_kind\n'
+  + 'target,94901810,8056262721391,379.99,https://www.target.com/p/-/A-94901810,2026-11-19T21:40:00-08:00,minute,dated public listing snapshot\n';
 export const PRODUCT = 'Ray-Ban Meta Wayfarer Gen 2 · Matte black · Clear nonprescription · Regular 50–22';
 export const BRIEFS = {
   pickup: 'I’m leaving San Francisco Saturday morning. Find the regular matte-black Ray-Ban Meta Wayfarer Gen 2 with clear, nonprescription lenses for Friday-evening pickup near 94123. Check Best Buy, Target, and Ray-Ban. Tell me where you’d get them and what I’d pay.',

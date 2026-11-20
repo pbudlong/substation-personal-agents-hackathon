@@ -3,7 +3,7 @@ import {assessPickup,stamp} from './agent.mjs';
 
 const jsonHeaders={'Content-Type':'application/json'};
 async function api(url,options,ms=7500){
-  const res=await fetch(url,{...options,signal:AbortSignal.timeout(ms),redirect:'error'});
+  const res=await fetch(url,{...options,signal:AbortSignal.timeout(ms),redirect:'manual'});
   if(!res.ok) throw Error('Service returned HTTP '+res.status);
   return res.json();
 }
@@ -29,6 +29,10 @@ export async function readSql(env,id){
   const result=await sql(env,'query/rows','SELECT record_json FROM substation_runs WHERE run_id=?',[id]);
   const raw=result.results?.[0]?.rows?.[0]?.record_json;
   return raw ? JSON.parse(raw) : null;
+}
+export async function readAirbyteSql(env){
+  const result=await sql(env,'query/rows','SELECT record_json,airbyte_emitted_at,airbyte_synced_at FROM substation_airbyte_catalog ORDER BY airbyte_synced_at DESC LIMIT 20');
+  return {job:env.AIRBYTE_JOB_ID,connectionId:env.AIRBYTE_CONNECTION_ID,connector:'airbyte/source-file:0.6.1 → substation/airbyte-singlestore:0.1.0',records:(result.results?.[0]?.rows||[]).map(row=>({...JSON.parse(row.record_json),synced_at:row.airbyte_synced_at}))};
 }
 export function pickupAssessment(run,claim){
   const chosen=run.offers.find(o=>o.seller===run.decision.seller);
@@ -67,6 +71,7 @@ export async function queryCognee(env,offers,log,runId){
   form.set('data',new Blob([JSON.stringify(facts)],{type:'text/plain'}),'offers.txt');
   form.set('datasetName',dataset);form.set('run_in_background','false');
   const headers={'X-Api-Key':env.COGNEE_API_KEY};
+  if(env.COGNEE_TENANT_ID) headers['X-Tenant-Id']=env.COGNEE_TENANT_ID;
   await api(base.origin+'/api/v1/remember',{method:'POST',headers,body:form},40000);
   const query='Return the exact receipt IDs and store IDs linked to GTIN '+GTIN+' whose offers lack a verified Friday-evening pickup window in San Francisco.';
   const raw=await api(base.origin+'/api/v1/recall',{method:'POST',headers:{...headers,...jsonHeaders},body:JSON.stringify({query,datasets:[dataset],search_type:'GRAPH_COMPLETION',top_k:5,only_context:true})},22000);
@@ -80,13 +85,16 @@ export function applyAirbyte(offers,feed,log){
   const used=[];
   for(const message of feed.records){
     const rec=message.record, row=rec?.data;
-    if(message.type!=='RECORD'||row?.gtin!==GTIN||!Number.isFinite(rec.emitted_at)||!Number.isFinite(Date.parse(row.observed_at))) continue;
+    if(message.type!=='RECORD'||String(row?.gtin)!==GTIN||!Number.isFinite(rec.emitted_at)||!Number.isFinite(Date.parse(row.observed_at))) continue;
     const offer=offers.find(o=>o.id===row.merchant && o.item===String(row.item_id));
     if(!offer || row.source!==offer.link || !Number.isFinite(Number(row.price_usd))||Number(row.price_usd)<=0) continue;
-    if(offer.mode.startsWith('live') || Date.parse(offer.observedAt)>Date.parse(row.observed_at)) continue;
-    Object.assign(offer,{price:Number(row.price_usd),source:row.source,observedAt:row.observed_at,mode:'dated participant feed via Airbyte'});
-    const receipt={merchant:offer.id,observedAt:row.observed_at,ingestedAt:new Date(rec.emitted_at).toISOString(),job:feed.job,connector:feed.connector,row};
-    used.push(receipt);log('Read Airbyte-synced offer',offer.id,row.source,receipt);
+    if(Date.parse(row.observed_at)>rec.emitted_at||rec.emitted_at>Date.now()+60000)continue;
+    if(offer.syncedCatalog&&Date.parse(offer.syncedCatalog.observedAt)>=Date.parse(row.observed_at))continue;
+    const historical=offer.mode.startsWith('live')||Date.parse(offer.observedAt)>Date.parse(row.observed_at);
+    if(!historical)Object.assign(offer,{price:Number(row.price_usd),source:row.source,observedAt:row.observed_at,mode:'dated participant feed via Airbyte'});
+    const receipt={merchant:offer.id,seller:offer.seller,observedAt:row.observed_at,observedPrecision:row.observed_precision||null,extractedAt:new Date(rec.emitted_at).toISOString(),syncedAt:message.synced_at||new Date(rec.emitted_at).toISOString(),job:feed.job,connectionId:feed.connectionId||null,connector:feed.connector,usage:historical?'historical price comparison':'dated price evidence',price:Number(row.price_usd),retainedPrice:offer.price,row};
+    offer.syncedCatalog=receipt;
+    used.push(receipt);log(historical?'Compare Airbyte-synced offer':'Read Airbyte-synced offer',offer.id,row.source,receipt);
   }
   return {status:used.length?'used':'no eligible rows',used};
 }

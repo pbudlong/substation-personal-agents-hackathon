@@ -1,5 +1,6 @@
 import { execute, getRun } from './service.mjs';
 import { homePage, receiptPage } from './receipt.mjs';
+import { THURSDAY_CATALOG_CSV } from './catalog.mjs';
 
 const runRoute = /^\/runs\/([0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})$/;
 const scopes = new Map([['/agent/pickup','pickup'],['/agent/quick','quick']]);
@@ -23,6 +24,7 @@ export default {
     const allowed=scope?'GET, POST': 'GET';
     if(request.method!=='GET' && !(scope && request.method==='POST'))return json({error:'Method not supported'},405,{Allow:allowed});
     if(url.pathname==='/')return html(homePage());
+    if(url.pathname==='/catalog/2026-11-19.csv')return new Response(THURSDAY_CATALOG_CSV,{headers:{...common,'Content-Type':'text/csv; charset=utf-8'}});
     if(!saved && !scope)return json({error:'No such route'},404);
     try{
       if(scope){

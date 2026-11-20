@@ -105,12 +105,18 @@ export function decide(offers,scope, asOf=new Date()) {
   if(!chosen) return {status:'no priced offer',seller:null,itemPrice:null,payableTotal:null,reason:'No matched listing returned an item price.'};
   const confirmed=assessPickup(chosen,asOf);
   const ties=priced.filter(o=>o.price===chosen.price).map(o=>o.seller);
-  return {status:scope==='quick'?'advertised price':confirmed?'pickup verified':'pickup unconfirmed',seller:chosen.seller,
+  const decision={status:scope==='quick'?'advertised price':confirmed?'pickup verified':'pickup unconfirmed',seller:chosen.seller,
     store:scope==='pickup'?chosen.store??null:null,itemPrice:chosen.price,payableTotal:chosen.total??null,
     cartQuote:scope==='pickup'?chosen.cartQuote??null:null,currency:'USD',merchantLink:chosen.link,
     ties:scope==='quick'?ties:[],pickup:scope==='pickup'?chosen.pickup:null,
     reason:scope==='quick'?'Lowest among independently priced exact listings. '+(offers.some(o=>o.price==null)?'At least one seller has no independently established price.':'All three listings priced.'):chosen.pickup?.reason??'No verified collection window.',
     priceSource:{url:chosen.source,observedAt:chosen.observedAt,mode:chosen.mode}};
+  const catalog=offers.filter(o=>o.syncedCatalog).map(o=>o.syncedCatalog);
+  if(catalog.length){
+    decision.syncedCatalog=catalog;
+    decision.reason+=' '+catalog.map(c=>c.usage==='historical price comparison'?c.seller+': the synced $'+c.price.toFixed(2)+' price is older, so the newer $'+c.retainedPrice.toFixed(2)+' price is retained.':c.seller+': the synced $'+c.price.toFixed(2)+' dated price is included in the comparison.').join(' ');
+  }
+  return decision;
 }
 export async function investigate(scope,env={}, options={}) {
   const t=Date.now(), trace=[], id=crypto.randomUUID();
