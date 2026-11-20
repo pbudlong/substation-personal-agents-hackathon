@@ -13,7 +13,13 @@ Each command saves and reopens a run. Dated merchant captures retain their origi
 
 The agent tries the product pages in parallel. The optional BESTBUY_API_KEY enables the official product and local-store APIs. An exact product price alone triggers a store-level lookup. A live merchant feed with a verified collection window can change the decision. Unknown facts remain explicit.
 
-## Sponsor services
+## Callable agent
+
+Open `/agent/pickup` to investigate the event brief. The browser displays the saved receipt. Automated callers can use `GET /agent/pickup?format=json` or `POST /agent/pickup`. The response contains `runId`, `savedRunUrl`, `jsonUrl`, the decision, merchant evidence, trace and API duration. Use `/agent/quick` for the advertised-price task.
+
+Read an existing decision with `GET /runs/{runId}?format=json`. This reads the saved record without calling merchants again. Sites uses the BUCKET binding declared in the hosting manifest. Start the same routes locally with `node serve.mjs`, test with `node --test agent.test.mjs`, and package the Worker with `node build.mjs`. The checkout can operate without merchant credentials using the labeled Friday captures.
+
+## Sponsor connections
 
 SingleStore uses its HTTPS Data API through SINGLESTORE_URL, SINGLESTORE_DATABASE, SINGLESTORE_USER and SINGLESTORE_PASSWORD. Run receipts use parameterized SQL and are read back by UUID. AMPLITUDE_API_KEY enables Agent Analytics events. The pickup assessment is checked against both the real decision and a labeled unsupported control. COGNEE_URL and COGNEE_API_KEY enable an isolated graph dataset per run. The agent consumes only source-matched, exact-variant records from Airbyte output. Credentials belong in runtime secrets.
 
