@@ -1,3 +1,4 @@
+import { getDemoFile } from './demo-files.mjs';
 import { execute, getRun } from './service.mjs';
 import { homePage, receiptPage } from './receipt.mjs';
 import { THURSDAY_CATALOG_CSV } from './catalog.mjs';
@@ -19,6 +20,15 @@ export default {
   async fetch(request,env){
     const url=new URL(request.url);
     const wantsPage=url.searchParams.get('format')!=='json' && (request.headers.get('Accept')||'').includes('text/html');
+    if (url.pathname === '/demo' || url.pathname.startsWith('/demo/')) {
+      if (!['GET', 'HEAD'].includes(request.method)) return json({error:'Method not supported'},405,{Allow:'GET, HEAD'});
+      const name = url.pathname === '/demo' ? 'index.html' : url.pathname.slice('/demo/'.length) || 'index.html';
+      const file = await getDemoFile(name);
+      if (!file) return json({error:'No such demo file'},404);
+      const headers = {...common, 'Content-Type':file.mime, 'Cache-Control':'no-cache',
+        'Content-Security-Policy':"default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'"};
+      return new Response(request.method === 'HEAD' ? null : file.bytes,{headers});
+    }
     const scope=scopes.get(url.pathname);
     const saved=runRoute.exec(url.pathname);
     const allowed=scope?'GET, POST': 'GET';
