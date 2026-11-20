@@ -1,0 +1,28 @@
+name: Substation shopping run
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/shop.yml'
+permissions:
+  contents: read
+jobs:
+  investigate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Investigate pickup and calibrate the evaluator
+        env:
+          AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
+        run: node task.mjs pickup --calibrate
+      - name: Check advertised prices separately
+        run: node task.mjs quick
+      - uses: actions/upload-artifact@v4
+        with:
+          name: shopping-receipts
+          path: .local/receipts/*.json
+          include-hidden-files: true
