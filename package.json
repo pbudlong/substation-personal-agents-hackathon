@@ -1,0 +1,13 @@
+{
+  "name": "substation-agent",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test agent.test.mjs",
+    "build": "node build.mjs",
+    "start": "node serve.mjs",
+    "pickup": "node task.mjs pickup",
+    "quick": "node task.mjs quick"
+  }
+}

@@ -1,0 +1,12 @@
+import {mkdir,writeFile,readFile} from 'node:fs/promises';
+import assert from 'node:assert/strict';
+import {investigate} from './agent.mjs';
+import {MERCHANTS} from './catalog.mjs';
+const run=await investigate('pickup',process.env,{merchants:MERCHANTS.slice(0,1)});
+await mkdir('.local/runs',{recursive:true});
+const file='.local/runs/'+run.id+'.json';
+await writeFile(file,JSON.stringify(run,null,2),{flag:'wx'});
+const saved=JSON.parse(await readFile(file,'utf8'));
+assert.equal(saved.id,run.id);
+assert(saved.trace.some(t=>t.action==='Choose store follow-up'));
+console.log(JSON.stringify({file,id:saved.id,status:saved.decision.status,seller:saved.decision.seller,price:saved.decision.itemPrice,steps:saved.trace.map(t=>t.action)}));
