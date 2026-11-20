@@ -35,8 +35,18 @@
     <fieldset id="replay-controls" disabled><legend class="hidden-label">Benchmark replay controls</legend>
       <div class="controls" aria-label="Shopping question"><button id="pickup">Friday pickup</button><button id="quick">Compare prices</button></div>
       <p id="brief" class="brief" aria-live="polite">Loading the recorded trials…</p>
-      <div class="controls toolbar"><button id="play" class="primary">Replay</button><label>Speed <select id="speed"><option value="1">1×</option><option value="4">4×</option><option selected value="8">8×</option></select></label><input id="scrub" type="range" min="0" value="0" step=".1" aria-label="Elapsed time since each prompt"><span id="clock" class="clock"></span><button id="finish">Show both finals</button></div>
+      <div class="controls toolbar"><button id="play" class="primary">Replay</button><label>Speed <select id="speed"><option value="1">1×</option><option value="4">4×</option><option value="8">8×</option><option selected value="16">16×</option></select></label><input id="scrub" type="range" min="0" value="0" step=".1" aria-label="Elapsed time since each prompt"><span id="clock" class="clock"></span><button id="finish">Show both finals</button></div>
+      <label class="partner-toggle"><input type="checkbox" id="show-partner-code" aria-controls="partner-panel"> Show Substation’s partner code</label>
     </fieldset>
+    <template id="partner-view">
+      <section id="partner-panel" class="partner-panel" aria-label="Substation partner code" hidden>
+        <h3>Substation’s partner code</h3>
+        <label>Integration <select data-partner-select>
+          <option value="auto">Follow recorded run</option><option value="airbyte">Airbyte</option><option value="cognee">Cognee Cloud</option><option value="amplitude">Amplitude</option><option value="singleStore">SingleStore</option>
+        </select></label>
+        <div data-partner-content aria-live="polite"></div>
+      </section>
+    </template>
     <div id="panels" class="grid"></div>
     <noscript>Enable JavaScript to play the recorded replies. The cart quote, price history and saved decisions are available above.</noscript>
     <details class="evidence"><summary>How the trials were scored</summary><p>“First useful” starts with the first observed shopping fact. “Three prices” requires all three retailers. Both pickup comparisons were first seen in the final replies. Times are observation bounds. The replay holds the latest sampled frame during capture gaps.</p><p>Coverage counts the requested fields each reply addressed. Accuracy checks compare individual claims to dated merchant evidence. Both quick-price answers passed all seven checks. One shared chat, two tasks and reused evidence limit conclusions about speed and general accuracy. Target’s pickup stock count lacked independent confirmation.</p></details>
