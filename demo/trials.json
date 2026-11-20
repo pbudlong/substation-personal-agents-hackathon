@@ -206,6 +206,17 @@
       ],
       "receiptVerification": {
         "source": "/runs/ad1007a8-fd7c-4f5c-8810-d9b2ba5620d9"
+      },
+      "partnerTrace": {
+        "observedAtSeconds": {
+          "airbyte": 8.756
+        },
+        "results": {
+          "airbyte": "Compared Target’s synced $379.99 observation and retained $284.99.",
+          "cognee": "Skipped in this price-only run.",
+          "amplitude": "Amplitude acknowledged all 10 submitted events.",
+          "singleStore": "Saved the run and verified its contents by reading it back."
+        }
       }
     },
     "C-S": {
@@ -489,6 +500,18 @@
       ],
       "receiptVerification": {
         "source": "/runs/d9040ab9-78f3-4b47-95a7-c734a28c1003"
+      },
+      "partnerTrace": {
+        "observedAtSeconds": {
+          "airbyte": 7.537,
+          "cognee": 36.147
+        },
+        "results": {
+          "airbyte": "Compared Target’s synced $379.99 observation and retained $284.99.",
+          "cognee": "Returned 3 retailers for pickup follow-up.",
+          "amplitude": "Amplitude acknowledged all 18 submitted events.",
+          "singleStore": "Saved the run and verified its contents by reading it back."
+        }
       }
     }
   }
