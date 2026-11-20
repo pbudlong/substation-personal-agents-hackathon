@@ -1,9 +1,17 @@
 import {mkdir,readFile,writeFile,copyFile} from 'node:fs/promises';
+import {bundleDemoFiles} from './demo-files.mjs';
 // All Worker modules use named imports from this fixed, dependency-ordered set.
 // Emit one self-contained ES module for the Sites Worker runtime.
 const files=['catalog.mjs','agent.mjs','sponsors.mjs','service.mjs','receipt.mjs','worker.mjs'];
 const bundled=[];
-const included=new Set();
+const media = await bundleDemoFiles();
+bundled.push('const demoFiles = ' + JSON.stringify(media) + ';', `
+function getDemoFile(name) {
+  if (!Object.hasOwn(demoFiles, name)) return null;
+  const {mime, data} = demoFiles[name];
+  return {mime, bytes:Uint8Array.from(atob(data), character => character.charCodeAt(0))};
+}`);
+const included=new Set(['demo-files.mjs']);
 for(const file of files){
   const source=await readFile(new URL(file,import.meta.url),'utf8');
   const body=source.replace(/^import\s*\{[^}]+\}\s*from ['"]\.\/([^'"]+)['"];$/gm,(_line,dependency)=>{
