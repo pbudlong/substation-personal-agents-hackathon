@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Compare two real shopping-agent replies, inspect a Best Buy cart quote, and replay a stale Target price arriving late.">
+  <title>The pickup quote · Substation demo</title>
+  <link rel="stylesheet" href="/demo/demo.css">
+  <script src="/demo/replay.js" defer></script>
+</head>
+<body>
+<header class="mast"><nav class="wrap" aria-label="Page navigation"><a class="brand" href="/">Substation</a><div><a href="#cart">Cart quote</a><a href="#freshness">Price history</a><a href="#replay">Replay</a></div></nav></header>
+<main class="wrap">
+  <section id="cart" class="story">
+    <p class="kicker">San Francisco · Friday, November 20, 2026</p>
+    <h1>From a $284 listing to a $312.76 cart quote.</h1>
+    <p class="intro">A shopper wanted regular, matte-black Ray-Ban Meta Wayfarer Gen 2 glasses with clear lenses for Friday pickup near 94123. We asked Muse what they would pay, then asked again with a Substation lookup link.</p>
+    <div class="pair">
+      <article class="estimate"><p class="kicker">Muse directly</p><h2>About $310</h2><p class="store">Target · Geary Blvd</p><p>Muse started with the $284.99 listing and estimated the total with tax. The shopper had a ballpark figure. The reply included no Target cart quote.</p></article>
+      <article class="quote"><p class="kicker">Muse with Substation</p><h2>$312.76</h2><p class="store">Best Buy · Harrison St</p><dl><div><dt>Item after discount</dt><dd>$284.00</dd></div><div><dt>Estimated sales tax</dt><dd>$24.50</dd></div><div><dt>Recycling fee</dt><dd>$4.26</dd></div><div><dt>Store pickup</dt><dd>Free</dd></div></dl><p>The dated cart accounts for the full $28.76 above the listing price. The final checkout amount and a pickup reservation remained unconfirmed.</p></article>
+    </div>
+    <details class="evidence"><summary>Inspect the original Best Buy cart</summary><figure><a href="/demo/best-buy-cart-quote.jpg"><img loading="lazy" width="1296" height="545" src="/demo/best-buy-cart-quote.jpg" alt="Best Buy order summary with $24.50 estimated sales tax, a $4.26 recycling fee, free pickup and a $312.76 total"></a><figcaption>Captured November 20 at 11:19 a.m. Pacific. The two replies recommended different stores.</figcaption></figure></details>
+    <a class="source" href="/runs/d9040ab9-78f3-4b47-95a7-c734a28c1003">Open the saved pickup decision</a>
+  </section>
+  <section id="freshness" class="history">
+    <p class="kicker">Target price history</p><h2>The $379.99 price arrived last.</h2>
+    <p>It was already a day old. Here is what happened to the same Target listing, in Pacific time.</p>
+    <ol class="timeline"><li><small>Thursday · 9:40 p.m.</small><strong>$379.99</strong><span>Target price observed</span></li><li><small>Friday · 11:16 a.m.</small><strong>$284.99</strong><span>Newer listing observed</span></li><li><small>Friday · 2:08 p.m.</small><strong>$379.99</strong><span>Airbyte delivered Thursday’s row</span></li></ol>
+    <h3>Substation kept $284.99.</h3><p>Replaying both records through the deployed price-selection code shows the effect. Accepting the incoming Airbyte row would have overstated the price by <b>$95</b>. Substation used the collection times to retain the newer price. Both WhatsApp replies also found $284.99.</p>
+    <div class="links"><a href="/runs/ad1007a8-fd7c-4f5c-8810-d9b2ba5620d9">Inspect the dated observations</a><a href="https://www.target.com/p/-/A-94901810">Exact Target listing</a></div>
+  </section>
+  <section id="replay" class="story">
+    <p class="kicker">WhatsApp benchmark</p><h2>Replay the two answers.</h2>
+    <p>The two runs start together on this timeline. Each panel shows actual sampled frames and the elapsed time since that prompt was sent. The routed replies disclosed reusing earlier retailer checks in the same chat.</p>
+    <fieldset id="replay-controls" disabled><legend class="hidden-label">Benchmark replay controls</legend>
+      <div class="controls" aria-label="Shopping question"><button id="pickup">Friday pickup</button><button id="quick">Compare prices</button></div>
+      <p id="brief" class="brief" aria-live="polite">Loading the recorded trials…</p>
+      <div class="controls toolbar"><button id="play" class="primary">Replay</button><label>Speed <select id="speed"><option value="1">1×</option><option value="4">4×</option><option selected value="8">8×</option></select></label><input id="scrub" type="range" min="0" value="0" step=".1" aria-label="Elapsed time since each prompt"><span id="clock" class="clock"></span><button id="finish">Show both finals</button></div>
+    </fieldset>
+    <div id="panels" class="grid"></div>
+    <noscript>Enable JavaScript to play the recorded replies. The cart quote, price history and saved decisions are available above.</noscript>
+    <details class="evidence"><summary>How the trials were scored</summary><p>“First useful” starts with the first observed shopping fact. “Three prices” requires all three retailers. Both pickup comparisons were first seen in the final replies. Times are observation bounds. The replay holds the latest sampled frame during capture gaps.</p><p>Coverage counts the requested fields each reply addressed. Accuracy checks compare individual claims to dated merchant evidence. Both quick-price answers passed all seven checks. One shared chat, two tasks and reused evidence limit conclusions about speed and general accuracy. Target’s pickup stock count lacked independent confirmation.</p></details>
+  </section>
+</main><footer class="wrap"><a href="/">Substation shopping agent</a><span>November 2026 benchmark</span></footer>
+</body></html>
